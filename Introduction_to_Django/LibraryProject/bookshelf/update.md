@@ -1,10 +1,10 @@
 # Retrieve the book instance
-book_to_update = Book.objects.get(title="1984")
+book = Book.objects.get(title="1984")
 # Update the title attribute
-book_to_update.title = "Nineteen Eighty-Four"
+book.title = "Nineteen Eighty-Four"
 # Save the changes to the database
-book_to_update.save()
-print(book_to_update.title)
+book.save()
+print(book.title)
 
 # Expected Output:
 # Nineteen Eighty-Four
