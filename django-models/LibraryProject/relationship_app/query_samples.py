@@ -1,5 +1,6 @@
 from relationship_app.models import Author, Book, Library, Librarian
 
+
 def create_sample_data():
     author1 = Author.objects.create(name="Jane Austen")
     author2 = Author.objects.create(name="George Orwell")
@@ -15,18 +16,20 @@ def create_sample_data():
     library_a.books.add(book1, book3)
     library_b.books.add(book2, book3, book4)
 
-    librarian_a = Librarian.objects.create(name="Alice Smith", library=library_a)
-    librarian_b = Librarian.objects.create(name="Bob Johnson", library=library_b)
-    
+    librarian_a = Librarian.objects.create(
+        name="Alice Smith", library=library_a)
+    librarian_b = Librarian.objects.create(
+        name="Bob Johnson", library=library_b)
+
     print("Sample data created successfully.")
-    
+
 
 def query_books_by_author(author_name):
     """Query all books by a specific author (ForeignKey reverse relationship)."""
     try:
         author = Author.objects.get(name=author_name)
-        books = author.book_set.all() 
-        print(f"\n📚 Books by {author_name}:")
+        books = Book.objects.filter(author=author)
+        print(f"\n📚 Books by {author_name} (using objects.filter()):")
         for book in books:
             print(f"- {book.title}")
     except Author.DoesNotExist:
