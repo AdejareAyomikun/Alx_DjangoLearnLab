@@ -11,12 +11,12 @@ def book_list_fbv(request):
         'books': all_books,
         'view_type': 'Function-Based View'
     }
-    return render(request, 'list_books.html', context)
+    return render(request, 'relationship_app/list_books.html', context)
 
 class LibraryDetailView(DetailView):
     """Displays details for a specific library using a DetailView CBV."""
     model = Library
-    template_name = 'library_detail.html'
+    template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library' 
 
     def get_context_data(self, **kwargs):
