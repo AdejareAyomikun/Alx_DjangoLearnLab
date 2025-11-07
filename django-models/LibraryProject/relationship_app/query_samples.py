@@ -51,7 +51,7 @@ def query_books_in_library(library_name):
 def query_librarian_for_library(library_name):
     """Retrieve the librarian for a library (OneToOneField reverse relationship)."""
     try:
-        librarian = Librarian.objects.get(library__name=library_name)
+        librarian = Librarian.objects.get(library=library_name)
         print(
             f"\n Librarian for '{library_name}' (using objects.get() lookup):")
         print(f"- {librarian.name}")
