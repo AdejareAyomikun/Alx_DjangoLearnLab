@@ -35,25 +35,28 @@ def query_books_by_author(author_name):
     except Author.DoesNotExist:
         print(f"\nAuthor '{author_name}' not found.")
 
+
 def query_books_in_library(library_name):
     """List all books in a library (ManyToManyField)."""
     try:
         library = Library.objects.get(name=library_name)
-        books = library.books.all() 
+        books = library.books.all()
         print(f"\n📖 Books in '{library_name}':")
         for book in books:
             print(f"- {book.title} (by {book.author.name})")
     except Library.DoesNotExist:
         print(f"\nLibrary '{library_name}' not found.")
 
+
 def query_librarian_for_library(library_name):
     """Retrieve the librarian for a library (OneToOneField reverse relationship)."""
     try:
-        library = Library.objects.get(name=library_name)
-        librarian = library.librarian 
-        print(f"\n👤 Librarian for '{library_name}':")
+        librarian = Librarian.objects.get(library__name=library_name)
+        print(
+            f"\n Librarian for '{library_name}' (using objects.get() lookup):")
         print(f"- {librarian.name}")
-    except Library.DoesNotExist:
-        print(f"\nLibrary '{library_name}' not found.")
     except Librarian.DoesNotExist:
-        print(f"\nNo librarian found for '{library_name}'.")
+        print(f"\nNo librarian found for library '{library_name}'.")
+    except Librarian.MultipleObjectsReturned:
+        print(
+            f"\nError: Multiple librarians found for '{library_name}'. (Should not happen with OneToOneField)")
