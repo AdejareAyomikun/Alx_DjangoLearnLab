@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.detail import DetailView
 from .models import Book
@@ -32,11 +33,11 @@ class LibraryDetailView(DetailView):
         return context
 
 
-class LoginView(login):
+class LoginView(LoginView):
     template_name = 'registration/login.html'
 
 
-class LogoutView(logout):
+class LogoutView(LogoutView):
     template_name = 'registration/logged_out.html'
 
 
