@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.list_books, name='book_list_root'),
     path('books/', list_books, name='book_list'),
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+    path('register/', views.register, name='register',)
 ]
