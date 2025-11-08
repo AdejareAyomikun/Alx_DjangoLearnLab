@@ -29,10 +29,10 @@ class LibraryDetailView(DetailView):
         context['view_type'] = 'Class-Based View'
         return context
     
-class UserLoginView(login):
+class LoginView(login):
     template_name = 'registration/login.html'
 
-class UserLogoutView(logout):
+class LogoutView(logout):
     template_name = 'registration/logged_out.html'
     
 def register(request):
