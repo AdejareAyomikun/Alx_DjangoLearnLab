@@ -3,7 +3,7 @@ from django.views.generic.detail import DetailView
 from .models import Book
 from .models import Library
 
-def book_list_fbv(request):
+def list_books(request):
     """Lists all books using a function-based view."""
     # Retrieve all Book objects
     all_books = Book.objects.all().select_related('author')
