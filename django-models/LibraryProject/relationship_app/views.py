@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect , get_object_or_404
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.detail import DetailView
 from .models import Book
@@ -26,6 +27,12 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['view_type'] = 'Class-Based View'
         return context
+    
+class UserLoginView(LoginView):
+    template_name = 'registration/login.html'
+
+class UserLogoutView(LogoutView):
+    template_name = 'registration/logged_out.html'
     
 def register(request):
     if request.method == 'POST':
