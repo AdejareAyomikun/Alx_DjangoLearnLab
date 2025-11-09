@@ -5,15 +5,34 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
+from django.http import HttpResponse
 from .utils import is_admin, is_librarian, is_member
 from django.conf import settings
 from .models import Book
 from .models import Library
 
 
+@permission_required('relationship_app.can_add_book', login_url='/relationship_app/login/')
+def add_book(request):
+    """Placeholder view for adding a new book."""
+    return render(request, 'relationship_app/book_form.html', {'action': 'Add Book'})
+
+@permission_required('relationship_app.can_change_book', login_url='/relationship_app/login/')
+def edit_book(request, pk):
+    """Placeholder view for editing an existing book."""
+    book = get_object_or_404(Book, pk=pk)
+    return render(request, 'relationship_app/book_form.html', {'action': f'Edit Book: {book.title}'})
+
+# Permission required: relationship_app.can_delete_book
+@permission_required('relationship_app.can_delete_book', login_url='/relationship_app/login/')
+def delete_book(request, pk):
+    """Placeholder view for deleting a book."""
+    book = get_object_or_404(Book, pk=pk)
+    return HttpResponse(f"Book '{book.title}' successfully deleted (Placeholder).", status=200)
+
 def list_books(request):
     """Lists all books using a function-based view."""
-    # Retrieve all Book objects
     all_books = Book.objects.all().select_related('author')
 
     context = {
