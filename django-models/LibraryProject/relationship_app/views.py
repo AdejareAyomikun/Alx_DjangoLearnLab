@@ -4,6 +4,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import user_passes_test
+from .utils import is_admin, is_librarian, is_member
+from django.conf import settings
 from .models import Book
 from .models import Library
 
@@ -51,3 +54,15 @@ def register(request):
             form = UserCreationForm()
             context = {'form': form}
             return render(request, 'relationship_app/register.html', context)
+
+@user_passes_test(is_admin, login_url=settings.LOGIN_URL)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html', {'role': 'Admin'})
+
+@user_passes_test(is_librarian, login_url=settings.LOGIN_URL)
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html', {'role': 'Librarian'})
+
+@user_passes_test(is_member, login_url=settings.LOGIN_URL)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html', {'role': 'Member'})
