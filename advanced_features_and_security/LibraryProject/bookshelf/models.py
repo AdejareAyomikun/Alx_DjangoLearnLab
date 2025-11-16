@@ -36,6 +36,9 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **extra_fields)
     
+    def can_create(self, user):
+        return user.is_active and user.is_staff
+    
     def can_view(self, user):
         return self.is_active and (self.is_staff or self == user)
     
