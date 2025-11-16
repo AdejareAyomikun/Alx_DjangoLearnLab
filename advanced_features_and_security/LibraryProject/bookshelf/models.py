@@ -1,6 +1,6 @@
 from django.db import models
 from django.db import AbstractUser
-from django.db import BaseUserManager\
+from django.db import BaseUserManager
 
 class Book(models.Model):
     # Book Title (required, up to 200 characters)
@@ -35,3 +35,12 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
 
         return self.create_user(username, email, password, **extra_fields)
+    
+    def can_view(self, user):
+        return self.is_active and (self.is_staff or self == user)
+    
+    def can_edit(self, user):
+        return self.is_active and self == user
+    
+    def can_delete(self, user):
+        return self.is_active and self == user
