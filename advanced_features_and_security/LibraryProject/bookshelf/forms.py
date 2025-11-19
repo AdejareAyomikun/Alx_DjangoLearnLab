@@ -2,19 +2,16 @@ from django import forms
 from .models import Book
 
 class BookForm(forms.ModelForm):
-    """
-    A ModelForm for creating and editing Book instances.
-    It automatically generates form fields based on the Book model.
-    """
     class Meta:
         model = Book
-        # Fields to include in the form
-        fields = ['title', 'author', 'publication_date', 'isbn'] 
+        fields = ['title', 'author']
         
-        # Optional: Add human-readable labels
         labels = {
             'title': 'Book Title',
             'author': 'Author',
-            'publication_date': 'Publication Date',
-            'isbn': 'ISBN Number',
         }
+        
+class ExampleForm(forms.Form):
+    name = forms.CharField(label='Your Name', max_length=100)
+    email = forms.EmailField(label='Your Email')
+    
