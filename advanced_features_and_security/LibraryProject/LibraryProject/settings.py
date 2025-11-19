@@ -23,9 +23,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&4g=53+mova&xesl3sx@ydbt^(1i6*w&_$+apa_*vi^z-81ep$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+
+# SECURITY WARNING: Should be set to False in production!
+DEBUG = False # 💡 Step 1: Set DEBUG to False in production
+
+# 💡 Step 1: HTTPS-Only Cookies (Essential for production)
+# Requires HTTPS setup to function correctly.
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# 💡 Step 1: Browser Protections
+SECURE_BROWSER_XSS_FILTER = True # Enforces browser's XSS filtering
+X_FRAME_OPTIONS = 'DENY' # Prevents Clickjacking (already in MIDDLEWARE, but good practice to explicitly set)
+SECURE_CONTENT_TYPE_NOSNIFF = True # Prevents MIME-type sniffing vulnerabilities
+
+# 💡 Step 4: Content Security Policy (CSP) Setup
+# You would need to install 'django-csp' (pip install django-csp) and add 'csp.middleware.CSPMiddleware'
+# to your MIDDLEWARE list for this to be fully enforced.
+
+CSP_DEFAULT_SRC = ("'self'",) # Only allow content from the app's own domain
+CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com", "'unsafe-inline'",) # Example: allows self and Google Fonts
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'",) # Allows self (Inline scripts are generally risky, remove 'unsafe-inline' if possible)
+CSP_IMG_SRC = ("'self'", "data:",) # Allows self and data URIs for small images
 
 
 # Application definition
