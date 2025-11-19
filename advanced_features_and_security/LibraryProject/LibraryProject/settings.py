@@ -36,6 +36,8 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
 # 💡 Step 1: Browser Protections
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_BROWSER_XSS_FILTER = True # Enforces browser's XSS filtering
 X_FRAME_OPTIONS = 'DENY' # Prevents Clickjacking (already in MIDDLEWARE, but good practice to explicitly set)
 SECURE_CONTENT_TYPE_NOSNIFF = True # Prevents MIME-type sniffing vulnerabilities
