@@ -1,15 +1,14 @@
 from django.db import models
-from django.db import models
+from django.db import models 
 
-class Product(models.Model):
-    name = models.CharField(max_length=255, unique=True, help_text="The unique name of the product.")
-    description = models.TextField(help_text="A detailed description of the product.")
-    price = models.DecimalField(max_digits=10, decimal_places=2, help_text="The price of the product (e.g., 99.99).")
-
+class Book(models.Model):
+    title = models.CharField(max_length=255, help_text="The title of the book.")
+    author = models.CharField(max_length=255, help_text="The name of the book's author.")
+    
     def __str__(self):
-        return self.name
+        return f"{self.title} by {self.author}"
 
     class Meta:
-        ordering = ['name']
-        verbose_name = "Product"
-        verbose_name_plural = "Products"
+        ordering = ['title']
+        verbose_name = "Book"
+        verbose_name_plural = "Books"
