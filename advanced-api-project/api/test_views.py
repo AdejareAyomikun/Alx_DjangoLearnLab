@@ -14,7 +14,7 @@ class BookAPITests(APITestCase):
         self.author = Author.objects.create(name="Jane Austen")
         self.user = User.objects.create_user(username='testuser', password='password123')
         self.auth_client = APIClient()
-        logged_in = self.auth_client.login(username='testuser', password='password123')
+        logged_in = self.client.login(username='testuser', password='password123')
         self.assertTrue(logged_in)
     
         self.book1 = Book.objects.create(
