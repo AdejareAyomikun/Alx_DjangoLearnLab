@@ -108,20 +108,20 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', context)
 
 @login_required
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        post_pk = self.kwargs.get('pk')
+        post = get_object_or_404(Post, pk=post_pk)
+        form.instance.post = post
+        
+        return super().form_valid(form)
     
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user
-            comment.save()
-            messages.success(request, "Your comment has been posted.")
-            return redirect('post_detail', pk=post.pk)
-    
-    return redirect('post_detail', pk=post.pk)
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'pk': self.object.post.pk})
 
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
