@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Detail</title>
+</head>
+<body>
+    <h1>🏛️ Library: {{ library.name }} ({{ view_type }})</h1>
+    <h2>Books in Library:</h2>
+    <ul>
+        {% for book in library.books.all %}
+        <li><strong>{{ book.title }}</strong> by {{ book.author.name }}</li>
+        {% empty %}
+        <li>This library does not currently have any books listed.</li>
+        {% endfor %}
+    </ul>
+    <p>Librarian: {{ library.librarian.name }}</p>
+</body>
+</html>

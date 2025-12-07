@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'blog/css/style.css' %}"
+    />
+  </head>
+  <body>
+    {% block content %}
+    <h2>All Blog Posts</h2>
+    {% if user.is_authenticated %}
+    <p><a href="{% url 'post_create' %}">➕ Create New Post</a></p>
+    {% endif %} {% for post in posts %}
+    <article class="post-summary">
+      <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+      <p class="post-meta">
+        By: {{ post.author.username }} | Published: {{
+        post.published_date|date:"F j, Y" }}
+      </p>
+      <p>{{ post.content|truncatewords:30 }}</p>
+      <hr />
+    </article>
+    {% empty %}
+    <p>No posts found. Be the first to post!</p>
+    {% endfor %} {% endblock content %}
+    <script src="{% static 'blog/js/script.js' %}"></script>
+  </body>
+</html>

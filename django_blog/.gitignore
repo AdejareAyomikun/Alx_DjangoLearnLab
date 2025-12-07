@@ -1,0 +1,10 @@
+*.pyc
+__pycache__/
+*~
+*.log
+.DS_Store # macOS files
+
+/media/ # User uploaded files
+/static/ # Collected static files
+.env
+db.sqlite3
