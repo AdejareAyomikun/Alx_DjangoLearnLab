@@ -11,13 +11,13 @@ from .views import (
     CommentDeleteView,
     post_detail,
     SearchResultsView,
-    TagPostListView
+    PostByTagListView
 )
 
 urlpatterns = [
     path('', PostListView.as_view(), name='post_list'),
     path('search/', SearchResultsView.as_view(), name='search_results'),
-    path('tags/<slug:tag_slug>/', TagPostListView.as_view(), name='posts_by_tag'),
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts_by_tag'),
     path('post/<int:pk>/', post_detail, name='post_detail'),
     path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='add_comment_to_post'),
     path('post/new/', PostCreateView.as_view(), name='post_create'),
