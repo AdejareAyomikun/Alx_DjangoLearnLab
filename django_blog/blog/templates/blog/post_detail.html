@@ -1,19 +1,44 @@
-{% extends "post_list.html" %}
+{% load static %}
 
-{% block content %}
-    <article class="full-post">
-        <h2>{{ post.title }}</h2>
-        <p class="post-meta">By: {{ post.author.username }} | Published: {{ post.published_date|date:"F j, Y" }}</p>
-        <div class="post-content">
-            {{ post.content|linebreaks }}
+<hr>
+
+<section id="comments-section">
+    <h3>Comments ({{ comments.count }})</h3>
+
+    {% if user.is_authenticated %}
+        <div class="comment-form-container">
+            <h4>Leave a Comment</h4>
+            <form method="POST" action="{% url 'add_comment_to_post' pk=post.pk %}">
+                {% csrf_token %}
+                {{ comment_form.content }}
+                <button type="submit" class="btn-comment">Post Comment</button>
+            </form>
         </div>
-    </article>
-    
-    {% if post.author == user %}
-    <div class="post-actions">
-        <a href="{% url 'post_update' pk=post.pk %}">✏️ Edit Post</a> |
-        <a href="{% url 'post_delete' pk=post.pk %}">🗑️ Delete Post</a>
-    </div>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">log in</a> to leave a comment.</p>
     {% endif %}
 
-{% endblock content %}
+    <div class="comments-list">
+        {% for comment in comments %}
+            <div class="comment-item">
+                <p class="comment-author">
+                    <strong>{{ comment.author.username }}</strong> 
+                    <small>on {{ comment.created_at|date:"M d, Y" }}</small>
+                </p>
+                <p class="comment-content">{{ comment.content }}</p>
+
+                {% if comment.author == user %}
+                    <div class="comment-actions">
+                        <small>
+                            <a href="{% url 'comment_edit' comment_pk=comment.pk %}">Edit</a> |
+                            <a href="{% url 'comment_delete' comment_pk=comment.pk %}">Delete</a>
+                        </small>
+                    </div>
+                {% endif %}
+            </div>
+            <hr>
+        {% empty %}
+            <p>No comments yet. Be the first!</p>
+        {% endfor %}
+    </div>
+</section>
