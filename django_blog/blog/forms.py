@@ -1,5 +1,6 @@
 from django import forms
 from .models import Post
+from .widgets import TagWidget
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Comment
@@ -23,7 +24,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content', 'tags']
         widgets = {
-            'tags': forms.TextInput(attrs={'placeholder': 'e.g., django, tutorial, webdev'})
+            'tags': TagWidget()
         }
         
 class CommentForm(forms.ModelForm):
